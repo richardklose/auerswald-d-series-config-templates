@@ -1,0 +1,39 @@
+<configuration>
+  <templates>
+    <template name="Speeddial without subscription" prio="30">
+    <!-- This template is a plain copy of the original speeddial template, but without the blf 
+    subscription feature.
+    
+    When using SIP subscriptions, the phones try to subscribe to the uri at the registrar. If
+    the uri is an external number, it can't be subscribed, so the registrar will answer the
+    subscriptions request with 404, causing and endless try-to-subscribe-loop. Some registrars
+    (e.g. an AVM Fritz!Box), will blacklist devices, that send to much requests.
+    Because those subscriptions to external numbers aren't possible at all, they should be 
+    omitted completely.
+    -->
+      <keyConfiguration>
+        <function>
+          <invocations>
+            <invocation>
+              <invite>
+                <uri/>
+                <line>
+                  <id/>
+                </line>
+              </invite>
+            </invocation>
+          </invocations>
+        </function>
+      </keyConfiguration>
+      <parameters>
+        <parameter name="@string/uri">
+          <path>//invite/uri</path>
+          <mode>append</mode>
+        </parameter>
+        <parameter optional="true" name="@string/identity">
+          <path>//invite/line/id</path>
+        </parameter>
+      </parameters>
+    </template>
+  </templates>
+  </configuration>
